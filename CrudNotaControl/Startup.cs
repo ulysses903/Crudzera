@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using CrudNotaControl.Models;
+using CrudNotaControl.Services;
 
 namespace CrudNotaControl
 {
@@ -33,6 +36,13 @@ namespace CrudNotaControl
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDbContext<CrudNotaControlContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("CrudNotaControlContext")));
+
+            services.AddScoped<EstadoService>();
+            services.AddScoped<CidadeService>();
+            services.AddScoped<EnderecoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
